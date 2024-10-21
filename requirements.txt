@@ -1,6 +1,6 @@
 pandas
 numpy
-tensorflow==2.15.0
+tensorflow
 seaborn
 keras
 scikit-learn
