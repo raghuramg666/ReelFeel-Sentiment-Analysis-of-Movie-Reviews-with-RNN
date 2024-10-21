@@ -8,9 +8,18 @@ from tensorflow.keras.models import load_model
 # Load the IMDB dataset word index
 word_index=imdb.get_word_index()
 reverse_word_index={value:key for key,value in word_index.items()}
+from tensorflow.keras.models import load_model
+
+# Define a custom function to ignore 'time_major'
+def simple_rnn_custom(**kwargs):
+    kwargs.pop('time_major', None)  # Remove 'time_major' if it exists
+    return tf.keras.layers.SimpleRNN(**kwargs)
+
+model = load_model('simple_rnn_imdb.h5', custom_objects={'SimpleRNN': simple_rnn_custom}, compile=False)
+
 
 #Load the pre-traiend model with ReLU activation
-model=load_model('simple_rnn_imdb.h5',compile=False)
+
 ###Helper functions to decode the review
 def decode_review(encoded_review):
     return ' '.join([reverse_word_index.get(i-3,'?') for i in encoded_review])
